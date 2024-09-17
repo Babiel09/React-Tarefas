@@ -2,16 +2,16 @@ import styled from "styled-components";
 import { TarefaProps } from "../../../types/tarefa";
 
 // Estilização das linhas da tabela `tr`
-const Tr = styled.tr<{isSelected:boolean}>`
+const Tr = styled.tr<{ isSelected: boolean; isCompletado: boolean }>`
   margin-bottom: 10px;
   padding: 15px;
-  background-color: ${props => props.isSelected ? '#4caf50': '#333'};
+  background-color: ${props => props.isCompletado ? '#d3d3d3' : (props.isSelected ? '#4caf50' : '#333')};
   &:nth-child(even) {
-    background-color: ${props => props.isSelected ? '#4caf50': '#333'};
+    background-color: ${props => props.isCompletado ? '#d3d3d3' : (props.isSelected ? '#4caf50' : '#333')};
   }
 
   &:hover {
-    background-color: #4caf50;
+    background-color: ${props => props.isCompletado ? '#d3d3d3' : '#4caf50'};
     color: white;
     transition: background-color 0.3s ease;
   }
@@ -34,6 +34,7 @@ const Td = styled.td`
 //Criando a Propriedade Geral:
 interface PropriedadadesGerais2 extends TarefaProps{
   tarefaSelecionada: (tarefaSelecionada:TarefaProps) => void
+  tarefaCompletada: (tarefaCompletada: TarefaProps) => void
 }
 //Funcção para terminar o código:
 
@@ -47,14 +48,18 @@ export default function itemTabela({ tarefa,
        {
   //Para que quando eu clique na tarefa ela mude de cor, isso deve acontecer:
   const isSelected:boolean = selecionado;
+  const isCompletado:boolean = completo;
   return (
-    <Tr isSelected={isSelected} onClick={() => tarefaSelecionada({
+    <Tr isSelected={isSelected}
+    isCompletado={isCompletado}
+    onClick={() => tarefaSelecionada({
       tarefa,
        tempo,
         selecionado,
          completo,
           id
-    })}>
+    })}
+    >
       <Td>{tarefa}</Td>
       <Td>{tempo}</Td>  
     </Tr>

@@ -37,10 +37,11 @@ const H1 = styled.h1`
 `;
 interface PropriedadesGerais3{
   selecionado: TarefaProps | undefined
+  encerrarTarefa: () => void
 }
 
 //Cronômetro
-export default function Cronometro({selecionado}:PropriedadesGerais3){
+export default function Cronometro({selecionado, encerrarTarefa}:PropriedadesGerais3){
   //Definindo o useState para modificar o relógio:
   const [tempo, setTempo] = useState<number>();
   
@@ -50,8 +51,15 @@ export default function Cronometro({selecionado}:PropriedadesGerais3){
       console.log("conversão: ",cronometroSegundos(selecionado.tempo))
     }
   }, [selecionado]);
-  
 
+  //Agora vou criar um outro useEffect para encerrar a tarefa:
+  useEffect(()=>{
+    if(tempo === 0){
+      encerrarTarefa()
+    }
+  },[tempo, encerrarTarefa])
+ 
+ 
 
 
 

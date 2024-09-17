@@ -23,6 +23,36 @@ function App() {
     })))
 
   };
+
+    //Criando a função para finalizar a tarefa:
+    function encerrarTarefa(){
+      if(selecionado){
+        setSelecionado(undefined)
+        setTarefas(tarefasAnteriores=> 
+          tarefasAnteriores.map((tarefa)=>{
+            if(tarefa.id === selecionado.id){
+              return{
+                ...tarefa,
+                selecionado: false,
+                completo :true
+              }
+             
+            } 
+            return tarefa;
+          })
+        )
+      }
+    }
+
+
+
+
+
+
+
+
+
+
   
   return (
       <DivContainer>
@@ -30,7 +60,10 @@ function App() {
         <Tabela 
         tarefas={tarefas}
         tarefaSelecionada={tarefaSelecionada}/>
-        <Cronometro  selecionado={selecionado}/>
+        <Cronometro  
+        selecionado={selecionado}
+        encerrarTarefa={encerrarTarefa}
+        />
       </DivContainer>
 
   )
