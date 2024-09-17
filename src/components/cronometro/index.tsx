@@ -5,7 +5,6 @@ import { cronometroSegundos } from "../../common/utils/rodando";
 import { TarefaProps } from "../../types/tarefa";
 import { useEffect, useState } from "react";
 
-
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,13 +19,10 @@ const Div = styled.div`
   &:hover {
     background-color: #2a2a2a;
   }
-  
-  
 `;
 
 const Div2 = styled.div`
   margin: 20px 0;
-  
 `;
 
 const H1 = styled.h1`
@@ -35,49 +31,55 @@ const H1 = styled.h1`
   margin-bottom: 10px;
   font-size: 32px;
 `;
-interface PropriedadesGerais3{
-  selecionado: TarefaProps | undefined
-  encerrarTarefa: () => void
+
+interface PropriedadesGerais3 {
+  selecionado: TarefaProps | undefined;
+  encerrarTarefa: () => void;
 }
 
 //Cronômetro
-export default function Cronometro({selecionado, encerrarTarefa}:PropriedadesGerais3){
+export default function Cronometro({ selecionado, encerrarTarefa }: PropriedadesGerais3) {
   //Definindo o useState para modificar o relógio:
   const [tempo, setTempo] = useState<number>();
-  
-  useEffect(()=>{
-    if(selecionado?.tempo){//Se exsite selecionado e se existe o "selecionado.tempo"
-      setTempo(cronometroSegundos(selecionado.tempo))
-      console.log("conversão: ",cronometroSegundos(selecionado.tempo))
+
+  useEffect(() => {
+    if (selecionado?.tempo) { //Se exsite selecionado e se existe o "selecionado.tempo"
+      setTempo(cronometroSegundos(selecionado.tempo));
+      console.log("conversão: ", cronometroSegundos(selecionado.tempo));
     }
   }, [selecionado]);
 
   //Agora vou criar um outro useEffect para encerrar a tarefa:
-  useEffect(()=>{
-    if(tempo === 0){
-      encerrarTarefa()
+  useEffect(() => {
+    if (tempo === 0) {
+      encerrarTarefa();
     }
-  },[tempo, encerrarTarefa])
- 
- 
+  }, [tempo, encerrarTarefa]);
 
+  //Criando a função de regressiva(Diminuir o valor dado no crônometro):
+  useEffect(() => {
+    let intervalo: number;
+    if (tempo && tempo > 0) {
+      intervalo = window.setInterval(() => {
+        setTempo((prevTempo) => (prevTempo ? prevTempo - 1 : 0));
+      }, 1000);
+    } else if (tempo === 0) {
+      alert("Tarefa finalizada!")
+    }
+    return () => clearInterval(intervalo);
+  }, [tempo]);
 
-
-    return(
-        <Div>
-            <H1>Iniciar Tarefa</H1>
-            <Div2>
-                <Relogio
-                tempo={tempo}
-                />
-            </Div2>
-            <Botao
-            nome="Iniciar"
-            type={"button"}
-            onClick={()=> console.log("Funcionando")}
-            //Usando a propriedade do botão.
-            />
-        </Div>
-    )
+  return (
+    <Div>
+      <H1>Iniciar Tarefa</H1>
+      <Div2>
+        <Relogio tempo={tempo} />
+      </Div2>
+      <Botao
+        nome="Iniciar"
+        type={"button"}
+        onClick={() => selecionado && setTempo(cronometroSegundos(selecionado.tempo))}
+      />
+    </Div>
+  );
 }
-
