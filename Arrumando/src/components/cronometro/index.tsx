@@ -15,8 +15,12 @@ const Div = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: fixed;
-  bottom: 100px;
-  right: 150px
+  bottom: 167px;
+  left: 1000px;
+  &:hover {
+    background-color: #2a2a2a;
+  }
+  
   
 `;
 
@@ -37,25 +41,27 @@ interface PropriedadesGerais3{
 
 //Cronômetro
 export default function Cronometro({selecionado}:PropriedadesGerais3){
-  console.log("conversão: ",cronometroSegundos('04:30:00'))
   //Definindo o useState para modificar o relógio:
   const [tempo, setTempo] = useState<number>();
   
   useEffect(()=>{
-    if(selecionado?.tempo){
+    if(selecionado?.tempo){//Se exsite selecionado e se existe o "selecionado.tempo"
       setTempo(cronometroSegundos(selecionado.tempo))
+      console.log("conversão: ",cronometroSegundos(selecionado.tempo))
     }
   }, [selecionado]);
   
 
 
 
+
     return(
         <Div>
             <H1>Iniciar Tarefa</H1>
-            Tempo:{tempo}
             <Div2>
-                <Relogio />
+                <Relogio
+                tempo={tempo}
+                />
             </Div2>
             <Botao
             nome="Iniciar"

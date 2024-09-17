@@ -13,7 +13,7 @@ const FormContainer = styled.form`
   align-items: flex-start;
   padding: 20px;
   margin: 20px auto;
-  background-color: #2c2c2c; /* Cinza escuro */
+  background-color: ##1c1c1c; /* Cinza escuro */
   border-radius: 8px;
   width: 90%;
   max-width: 400px;

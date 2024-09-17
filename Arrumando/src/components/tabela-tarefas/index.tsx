@@ -13,10 +13,13 @@ const Aside = styled.aside`
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   color: #fff;
   transition: transform 0.3s ease;
+  position:fixed;
+  left:200px;
+  bottom:120px;
 
-  &:hover {
-    background-color: #2a2a2a;
-  }
+    &:hover {
+      background-color: #2a2a2a;
+    }
 `;
 // Estilização do título `h2`
 const H2 = styled.h2`
